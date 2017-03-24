@@ -25,7 +25,8 @@ namespace ImageEffect.Filters
         public Bitmap Apply(Bitmap image)
         {
             var outputImage = ColorRangeExtract(image, 215, 16, 22, 70);
-            return BlobExtract(outputImage);
+            outputImage = BlobExtract(outputImage);
+            return outputImage;
         }
 
         public void Apply(UnmanagedImage sourceImage, UnmanagedImage destinationImage)

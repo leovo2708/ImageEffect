@@ -20,9 +20,6 @@ namespace ImageEffect
 {
     public partial class MainForm : Form
     {
-        private ImageForm inputImageForm = null;
-        private ImageForm outputImageForm = null;
-
         public MainForm()
         {
             InitializeComponent();
@@ -30,14 +27,14 @@ namespace ImageEffect
 
         protected override void OnShown(EventArgs e)
         {
-            InitFiltersDropdown();
-            UpdateButtonState(0);
+            LoadFilters();
             base.OnShown(e);
         }
 
-        private void InitFiltersDropdown()
+        private void LoadFilters()
         {
-            ArrayList q = new ArrayList();
+            filterListBox.Enabled = false;
+            var filters = new ArrayList();
             var aforgeAssembly = typeof(IFilter).Assembly;
             var filterTypes = aforgeAssembly.GetTypes().Where(type => !type.IsAbstract
                 && type.GetConstructor(Type.EmptyTypes) != null
@@ -46,26 +43,23 @@ namespace ImageEffect
             {
                 var name = type.Name;
                 var filter = Activator.CreateInstance(type);
-                q.Add(new ListBoxItem(name, filter));
+                filters.Add(new ListBoxItem(name, filter));
             });
-            /*q.Add(new ListBoxItem("ColorFiltering", new ColorFiltering()));
-            q.Add(new ListBoxItem("Invert", new Invert()));
-            q.Add(new ListBoxItem("Opening", new Opening()));
-            q.Add(new ListBoxItem("BlobsFiltering", new BlobsFiltering()));
-            q.Add(new ListBoxItem("GaussianSharpen", new GaussianSharpen()));
-            q.Add(new ListBoxItem("ContrastCorrection", new ContrastCorrection()));
-            q.Add(new ListBoxItem("ContrastCorrection", new ContrastCorrection()));*/
-            q.Sort();
+            filters.Sort();
+
+            var customFilters = new ArrayList();
             filterTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.GetInterfaces().Contains(typeof(IFilter)));
             filterTypes.ToList().ForEach(type =>
             {
                 var name = type.Name;
                 var filter = Activator.CreateInstance(type);
-                q.Add(new ListBoxItem(name, filter));
+                customFilters.Add(new ListBoxItem(name, filter));
             });
-            foreach (object o in q)
+            filters.InsertRange(0, customFilters);
+
+            foreach (var filter in filters)
             {
-                filterComboBox.Items.Add(o);
+                filterListBox.Items.Add(filter);
             }
         }
 
@@ -79,84 +73,20 @@ namespace ImageEffect
             };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                inputListBox.Items.Clear();
                 dialog.FileNames.ToList().ForEach(filePath =>
                 {
                     var fileName = Path.GetFileName(filePath);
-                    inputListBox.Items.Add(new ListBoxItem(fileName, filePath));
+                    var image = (Bitmap)Bitmap.FromFile(filePath);
+                    imageList.Images.Add(image);
+                    var item = new ListViewItem();
+                    item.ImageIndex = imageList.Images.Count - 1;
+                    item.Text = fileName;
+                    item.Tag = filePath;
+                    this.imageListView.Items.Add(item);
                 });
-                if (inputListBox.Items.Count > 0)
-                {
-                    inputListBox.SelectedIndex = 0;
-                }
             }
 
-            UpdateButtonState(1);
-        }
-
-        private void LoadInput(string fileName)
-        {
-            var image = Bitmap.FromFile(fileName);
-            inputPictureBox.Image = image;
-            if (autoPreprocessCheckBox.Checked)
-            {
-                runButton_Click(null, null);
-            }
-        }
-
-        private void UpdateButtonState(int step)
-        {
-            if (!autoPreprocessCheckBox.Checked)
-            {
-                runButton.Enabled = step >= 1;
-            }
-
-            if (step == 1)
-            {
-                outputPictureBox.Image = null;
-            }
-
-            decodeButton.Enabled = step >= 2;
-            if (step == 2)
-            {
-                outputTextBox.Text = "";
-            }
-        }
-
-        private void inputPictureBox_Click(object sender, EventArgs e)
-        {
-            if (inputPictureBox.Image != null)
-            {
-                if (inputImageForm == null || inputImageForm.IsDisposed)
-                {
-                    inputImageForm = new ImageForm(inputPictureBox.Image, "Input image");
-                    inputImageForm.Show(this);
-                }
-            }
-        }
-
-        private void outputPictureBox_Click(object sender, EventArgs e)
-        {
-            if (outputPictureBox.Image != null)
-            {
-                if (outputImageForm == null || outputImageForm.IsDisposed)
-                {
-                    outputImageForm = new ImageForm(outputPictureBox.Image, "Output image");
-                    outputImageForm.Show(this);
-                }
-            }
-        }
-
-        private Bitmap Preprocessing(Bitmap inputImage)
-        {
-            var filters = filterListBox.Items.Cast<ListBoxItem>().Select(item => (IFilter)item.Value).ToArray();
-            if (filters.Count() == 0)
-            {
-                MessageBox.Show("Please select a filter");
-                return null;
-            }
-            var seq = new FiltersSequence(filters);
-            return seq.Apply(inputImage);
+            statusLabel.Text = "Load done";
         }
 
         public string Tesseract(Bitmap image)
@@ -199,64 +129,12 @@ namespace ImageEffect
             return result;
         }
 
-        private void runButton_Click(object sender, EventArgs e)
-        {
-            var inputImage = (Bitmap)inputPictureBox.Image;
-            var outputImage = Preprocessing(inputImage);
-            outputPictureBox.Image = outputImage;
-            statusLabel.Text = "Preprocess completely";
-            UpdateButtonState(2);
-        }
-
         private void decodeButton_Click(object sender, EventArgs e)
         {
             var inputImage = (Bitmap)outputPictureBox.Image;
             var text = Tesseract(inputImage);
             outputTextBox.Text = text;
             statusLabel.Text = "Decode completely";
-        }
-
-        private void inputListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var item = (ListBoxItem)inputListBox.SelectedItem;
-            var filePath = (string)item.Value;
-            LoadInput(filePath);
-        }
-
-        private void autoPreprocessCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            runButton.Enabled = !autoPreprocessCheckBox.Checked;
-            if (autoPreprocessCheckBox.Checked)
-            {
-                runButton_Click(null, null);
-            }
-        }
-
-        private void addButton_Click(object sender, EventArgs e)
-        {
-            var item = (ListBoxItem)filterComboBox.SelectedItem;
-            if (item == null)
-            {
-                MessageBox.Show("Please select a filter to add");
-                return;
-            }
-
-            var types = Assembly.GetExecutingAssembly().GetTypes();
-            var typeName = $"{item.Text}Form";
-            var filterTypes = types.Where(type => type.Name == typeName);
-            if (filterTypes.Count() == 1)
-            {
-                var type = filterTypes.First();
-                var form = (FilterParam)Activator.CreateInstance(type, item.Value);
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    filterListBox.Items.Add(form.Item);
-                }
-            }
-            else
-            {
-                filterListBox.Items.Add(item);
-            }
         }
 
         private void filterListBox_MouseDown(object sender, MouseEventArgs e)
@@ -291,6 +169,64 @@ namespace ImageEffect
                     for (int i = selectedItems.Count - 1; i >= 0; i--)
                         filterListBox.Items.Remove(selectedItems[i]);
                 }
+            }
+        }
+
+        private void imageListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (imageListView.SelectedItems.Count > 0)
+            {
+                var lastSelectItem = imageListView.SelectedItems[imageListView.SelectedItems.Count - 1];
+                var filePath = lastSelectItem.Tag as string;
+                var inputImage = (Bitmap)Bitmap.FromFile(filePath);
+                inputPictureBox.Image = inputImage;
+                filterListBox.Enabled = true;
+            }
+            else
+            {
+                filterListBox.Enabled = false;
+            }
+        }
+
+        private void filterListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (filterListBox.SelectedItem == null) return;
+            try
+            {
+                statusLabel.Text = "";
+                var item = (ListBoxItem)filterListBox.SelectedItem;
+                var inputImage = (Bitmap)inputPictureBox.Image;
+                var filter = (IFilter)item.Value;
+                var outputImage = filter.Apply(inputImage);
+                outputPictureBox.Image = outputImage;
+            }
+            catch (Exception ex)
+            {
+                outputPictureBox.Image = null;
+                statusLabel.Text = ex.Message;
+            }
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            var outputImage = outputPictureBox.Image;
+            if (outputImage == null)
+            {
+                MessageBox.Show("Output is empty");
+                return;
+            }
+
+            var saveFileDialog = new SaveFileDialog
+            {
+                Title = "Save output image",
+                Filter = "PNG File|*.png",
+                FilterIndex = 2,
+                RestoreDirectory = true,
+            };
+            if(saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                outputImage.Save(saveFileDialog.FileName);
+                statusLabel.Text = "Save done";
             }
         }
     }
