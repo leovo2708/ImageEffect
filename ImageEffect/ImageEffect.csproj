@@ -71,6 +71,8 @@
     <Compile Include="Filters\BlobsFilteringForm.Designer.cs">
       <DependentUpon>BlobsFilteringForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filters\Filter1.cs" />
+    <Compile Include="Filters\Filter2.cs" />
     <Compile Include="Filters\FilterParam.cs" />
     <Compile Include="ImageForm.cs">
       <SubType>Form</SubType>

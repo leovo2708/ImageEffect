@@ -38,13 +38,31 @@ namespace ImageEffect
         private void InitFiltersDropdown()
         {
             ArrayList q = new ArrayList();
-            q.Add(new ListBoxItem("ColorFiltering", new ColorFiltering()));
+            var aforgeAssembly = typeof(IFilter).Assembly;
+            var filterTypes = aforgeAssembly.GetTypes().Where(type => !type.IsAbstract
+                && type.GetConstructor(Type.EmptyTypes) != null
+                && type.GetInterfaces().Contains(typeof(IFilter)));
+            filterTypes.ToList().ForEach(type =>
+            {
+                var name = type.Name;
+                var filter = Activator.CreateInstance(type);
+                q.Add(new ListBoxItem(name, filter));
+            });
+            /*q.Add(new ListBoxItem("ColorFiltering", new ColorFiltering()));
             q.Add(new ListBoxItem("Invert", new Invert()));
             q.Add(new ListBoxItem("Opening", new Opening()));
             q.Add(new ListBoxItem("BlobsFiltering", new BlobsFiltering()));
             q.Add(new ListBoxItem("GaussianSharpen", new GaussianSharpen()));
             q.Add(new ListBoxItem("ContrastCorrection", new ContrastCorrection()));
+            q.Add(new ListBoxItem("ContrastCorrection", new ContrastCorrection()));*/
             q.Sort();
+            filterTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.GetInterfaces().Contains(typeof(IFilter)));
+            filterTypes.ToList().ForEach(type =>
+            {
+                var name = type.Name;
+                var filter = Activator.CreateInstance(type);
+                q.Add(new ListBoxItem(name, filter));
+            });
             foreach (object o in q)
             {
                 filterComboBox.Items.Add(o);
@@ -132,26 +150,13 @@ namespace ImageEffect
         private Bitmap Preprocessing(Bitmap inputImage)
         {
             var filters = filterListBox.Items.Cast<ListBoxItem>().Select(item => (IFilter)item.Value).ToArray();
+            if (filters.Count() == 0)
+            {
+                MessageBox.Show("Please select a filter");
+                return null;
+            }
             var seq = new FiltersSequence(filters);
             return seq.Apply(inputImage);
-            //return MyEffect(inputImage);
-            //return ColorRangeExtract(inputImage, 215, 16, 22, 70);
-            //return BlobExtract(inputImage);
-        }
-
-        private Bitmap MyEffect(Bitmap inputImage)
-        {
-            Bitmap result = new Bitmap(inputImage);
-            for (var i = 0; i < 7; i++)
-            {
-                var x = 25 * (i + 1);
-                for (var j = 0; j < inputImage.Height; j++)
-                {
-                    var y = j;
-                    result.SetPixel(x, y, Color.Black);
-                }
-            }
-            return result;
         }
 
         public string Tesseract(Bitmap image)
@@ -166,19 +171,6 @@ namespace ImageEffect
                     return page.GetText().Trim();
                 }
             }
-        }
-
-        private Bitmap BlobExtract(Bitmap image)
-        {
-            var blobCounter = new BlobCounter()
-            {
-                ObjectsOrder = ObjectsOrder.XY
-            };
-            blobCounter.ProcessImage(image);
-            Bitmap bitmap = MainForm.DrawBitmapsAlignBottom((
-                from blob in (IEnumerable<Blob>)blobCounter.GetObjects(image, false)
-                select blob.Image.ToManagedImage()).ToList<Bitmap>());
-            return bitmap;
         }
 
         public static Bitmap DrawBitmapsAlignBottom(List<Bitmap> bitmaps)
@@ -202,30 +194,6 @@ namespace ImageEffect
                 {
                     g.DrawImage(bmp, new Point(startX, result.Height - bmp.Height - 10));
                     startX = startX + bmp.Width + 10;
-                }
-            }
-            return result;
-        }
-
-        private Bitmap ColorRangeExtract(Bitmap image, int red, int green, int blue, int delta)
-        {
-            Bitmap result = new Bitmap(image.Width, image.Height);
-            for (int x = 0; x < image.Width; x++)
-            {
-                for (int y = 0; y < image.Height; y++)
-                {
-                    result.SetPixel(x, y, Color.Black);
-                    Color pixelColor = image.GetPixel(x, y);
-                    if ((red + delta < pixelColor.R ? false : red - delta <= pixelColor.R))
-                    {
-                        if ((green + delta < pixelColor.G ? false : green - delta <= pixelColor.G))
-                        {
-                            if ((blue + delta < pixelColor.B ? false : blue - delta <= pixelColor.B))
-                            {
-                                result.SetPixel(x, y, Color.White);
-                            }
-                        }
-                    }
                 }
             }
             return result;
