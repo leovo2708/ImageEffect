@@ -8,9 +8,9 @@ namespace ImageEffect
 {
     public class ListBoxItem: IComparable
     {
-        public string Text { get; private set; }
+        public string Text { get; set; }
 
-        public object Value { get; private set; }
+        public object Value { get; set; }
 
         public ListBoxItem(string text, object value)
         {

@@ -11,16 +11,16 @@ using System.Windows.Forms;
 
 namespace ImageEffect.Filters
 {
-    public partial class BlobsFilteringForm : Form, FilterParam
+    public partial class BlobsFilteringUserControl : UserControl, FilterSetting
     {
         public ListBoxItem Item { get; private set; }
 
-        protected BlobsFilteringForm()
+        protected BlobsFilteringUserControl()
         {
             InitializeComponent();
         }
 
-        public BlobsFilteringForm(BlobsFiltering filter)
+        public BlobsFilteringUserControl(BlobsFiltering filter)
             :this()
         {
             minWidthNumericUpDown.Value = filter.MinWidth;
@@ -29,7 +29,7 @@ namespace ImageEffect.Filters
             maxHeightNumericUpDown.Value = filter.MaxHeight;
         }
 
-        private void okButton_Click(object sender, EventArgs e)
+        public ListBoxItem Save()
         {
             var minWidth = (int)minWidthNumericUpDown.Value;
             var maxWidth = (int)maxWidthNumericUpDown.Value;
@@ -37,9 +37,7 @@ namespace ImageEffect.Filters
             var maxHeight = (int)maxHeightNumericUpDown.Value;
             var filter = new BlobsFiltering(minWidth, minHeight, maxWidth, maxHeight);
             var text = $"BlobsFiltering ({minWidth}, {maxWidth} - {minHeight}, {maxHeight})";
-            Item = new ListBoxItem(text, filter);
-            DialogResult = DialogResult.OK;
-            Close();
+            return new ListBoxItem(text, filter);
         }
     }
 }

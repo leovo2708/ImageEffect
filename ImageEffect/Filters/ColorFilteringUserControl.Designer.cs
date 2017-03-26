@@ -1,6 +1,6 @@
 ﻿namespace ImageEffect.Filters
 {
-    partial class ColorFilteringForm
+    partial class ColorFilteringUserControl
     {
         /// <summary>
         /// Required designer variable.
@@ -34,7 +34,6 @@
             this.greenNumericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.blueNumericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.okButton = new System.Windows.Forms.Button();
             this.redNumericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.greenNumericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.blueNumericUpDown2 = new System.Windows.Forms.NumericUpDown();
@@ -48,7 +47,7 @@
             // 
             // redNumericUpDown1
             // 
-            this.redNumericUpDown1.Location = new System.Drawing.Point(57, 12);
+            this.redNumericUpDown1.Location = new System.Drawing.Point(49, 4);
             this.redNumericUpDown1.Maximum = new decimal(new int[] {
             255,
             0,
@@ -66,7 +65,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 14);
+            this.label1.Location = new System.Drawing.Point(13, 6);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(30, 13);
             this.label1.TabIndex = 1;
@@ -75,7 +74,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 46);
+            this.label2.Location = new System.Drawing.Point(4, 31);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 1;
@@ -83,7 +82,7 @@
             // 
             // greenNumericUpDown1
             // 
-            this.greenNumericUpDown1.Location = new System.Drawing.Point(57, 44);
+            this.greenNumericUpDown1.Location = new System.Drawing.Point(49, 29);
             this.greenNumericUpDown1.Maximum = new decimal(new int[] {
             255,
             0,
@@ -101,7 +100,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 79);
+            this.label3.Location = new System.Drawing.Point(12, 56);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(31, 13);
             this.label3.TabIndex = 1;
@@ -109,7 +108,7 @@
             // 
             // blueNumericUpDown1
             // 
-            this.blueNumericUpDown1.Location = new System.Drawing.Point(57, 77);
+            this.blueNumericUpDown1.Location = new System.Drawing.Point(49, 54);
             this.blueNumericUpDown1.Maximum = new decimal(new int[] {
             255,
             0,
@@ -124,19 +123,9 @@
             0,
             0});
             // 
-            // okButton
-            // 
-            this.okButton.Location = new System.Drawing.Point(172, 108);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 2;
-            this.okButton.Text = "OK";
-            this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
-            // 
             // redNumericUpDown2
             // 
-            this.redNumericUpDown2.Location = new System.Drawing.Point(157, 12);
+            this.redNumericUpDown2.Location = new System.Drawing.Point(149, 4);
             this.redNumericUpDown2.Maximum = new decimal(new int[] {
             255,
             0,
@@ -153,7 +142,7 @@
             // 
             // greenNumericUpDown2
             // 
-            this.greenNumericUpDown2.Location = new System.Drawing.Point(157, 44);
+            this.greenNumericUpDown2.Location = new System.Drawing.Point(149, 29);
             this.greenNumericUpDown2.Maximum = new decimal(new int[] {
             255,
             0,
@@ -170,7 +159,7 @@
             // 
             // blueNumericUpDown2
             // 
-            this.blueNumericUpDown2.Location = new System.Drawing.Point(157, 77);
+            this.blueNumericUpDown2.Location = new System.Drawing.Point(149, 54);
             this.blueNumericUpDown2.Maximum = new decimal(new int[] {
             255,
             0,
@@ -185,12 +174,10 @@
             0,
             0});
             // 
-            // ColorFilteringForm
+            // ColorFilteringUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 143);
-            this.Controls.Add(this.okButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -200,9 +187,8 @@
             this.Controls.Add(this.greenNumericUpDown1);
             this.Controls.Add(this.redNumericUpDown2);
             this.Controls.Add(this.redNumericUpDown1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "ColorFilteringForm";
-            this.Text = "ColorFilteringForm";
+            this.Name = "ColorFilteringUserControl";
+            this.Size = new System.Drawing.Size(249, 81);
             ((System.ComponentModel.ISupportInitialize)(this.redNumericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenNumericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueNumericUpDown1)).EndInit();
@@ -222,7 +208,6 @@
         private System.Windows.Forms.NumericUpDown greenNumericUpDown1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown blueNumericUpDown1;
-        private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.NumericUpDown redNumericUpDown2;
         private System.Windows.Forms.NumericUpDown greenNumericUpDown2;
         private System.Windows.Forms.NumericUpDown blueNumericUpDown2;

@@ -1,6 +1,6 @@
 ﻿namespace ImageEffect.Filters
 {
-    partial class BlobsFilteringForm
+    partial class BlobsFilteringUserControl
     {
         /// <summary>
         /// Required designer variable.
@@ -34,7 +34,6 @@
             this.minHeightNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.maxHeightNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.maxWidthNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.okButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.minWidthNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minHeightNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxHeightNumericUpDown)).BeginInit();
@@ -44,7 +43,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 14);
+            this.label1.Location = new System.Drawing.Point(8, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 0;
@@ -53,7 +52,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 43);
+            this.label2.Location = new System.Drawing.Point(5, 32);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 0;
@@ -61,21 +60,21 @@
             // 
             // minWidthNumericUpDown
             // 
-            this.minWidthNumericUpDown.Location = new System.Drawing.Point(59, 12);
+            this.minWidthNumericUpDown.Location = new System.Drawing.Point(52, 6);
             this.minWidthNumericUpDown.Name = "minWidthNumericUpDown";
             this.minWidthNumericUpDown.Size = new System.Drawing.Size(94, 20);
             this.minWidthNumericUpDown.TabIndex = 1;
             // 
             // minHeightNumericUpDown
             // 
-            this.minHeightNumericUpDown.Location = new System.Drawing.Point(59, 43);
+            this.minHeightNumericUpDown.Location = new System.Drawing.Point(52, 32);
             this.minHeightNumericUpDown.Name = "minHeightNumericUpDown";
             this.minHeightNumericUpDown.Size = new System.Drawing.Size(94, 20);
             this.minHeightNumericUpDown.TabIndex = 1;
             // 
             // maxHeightNumericUpDown
             // 
-            this.maxHeightNumericUpDown.Location = new System.Drawing.Point(159, 43);
+            this.maxHeightNumericUpDown.Location = new System.Drawing.Point(152, 32);
             this.maxHeightNumericUpDown.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -87,7 +86,7 @@
             // 
             // maxWidthNumericUpDown
             // 
-            this.maxWidthNumericUpDown.Location = new System.Drawing.Point(159, 12);
+            this.maxWidthNumericUpDown.Location = new System.Drawing.Point(152, 6);
             this.maxWidthNumericUpDown.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -97,31 +96,18 @@
             this.maxWidthNumericUpDown.Size = new System.Drawing.Size(94, 20);
             this.maxWidthNumericUpDown.TabIndex = 1;
             // 
-            // okButton
-            // 
-            this.okButton.Location = new System.Drawing.Point(178, 72);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 2;
-            this.okButton.Text = "OK";
-            this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
-            // 
-            // BlobsFilteringForm
+            // BlobsFilteringUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(270, 106);
-            this.Controls.Add(this.okButton);
             this.Controls.Add(this.maxHeightNumericUpDown);
             this.Controls.Add(this.minHeightNumericUpDown);
             this.Controls.Add(this.maxWidthNumericUpDown);
             this.Controls.Add(this.minWidthNumericUpDown);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "BlobsFilteringForm";
-            this.Text = "ContrastCorrectionForm";
+            this.Name = "BlobsFilteringUserControl";
+            this.Size = new System.Drawing.Size(258, 61);
             ((System.ComponentModel.ISupportInitialize)(this.minWidthNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.minHeightNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxHeightNumericUpDown)).EndInit();
@@ -139,6 +125,5 @@
         private System.Windows.Forms.NumericUpDown minHeightNumericUpDown;
         private System.Windows.Forms.NumericUpDown maxHeightNumericUpDown;
         private System.Windows.Forms.NumericUpDown maxWidthNumericUpDown;
-        private System.Windows.Forms.Button okButton;
     }
 }

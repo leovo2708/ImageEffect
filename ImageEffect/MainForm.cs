@@ -20,6 +20,8 @@ namespace ImageEffect
 {
     public partial class MainForm : Form
     {
+        private FilterSetting filterSetting;
+
         public MainForm()
         {
             InitializeComponent();
@@ -195,16 +197,37 @@ namespace ImageEffect
             {
                 statusLabel.Text = "";
                 var item = (ListBoxItem)filterListBox.SelectedItem;
-                var inputImage = (Bitmap)inputPictureBox.Image;
                 var filter = (IFilter)item.Value;
-                var outputImage = filter.Apply(inputImage);
-                outputPictureBox.Image = outputImage;
+                ApplyFilter(filter);
+
+                settingGroupBox.Controls.Clear();
+                saveSettingButton.Enabled = false;
+                filterSetting = null;
+                var types = Assembly.GetExecutingAssembly().GetTypes();
+                var typeName = $"{item.Text}UserControl";
+                var filterUserControl = types.Where(type => type.Name == typeName);
+                if (filterUserControl.Count() == 1)
+                {
+                    var type = filterUserControl.First();
+                    var userControl = (UserControl)Activator.CreateInstance(type, item.Value);
+                    userControl.Dock = DockStyle.Fill;
+                    settingGroupBox.Controls.Add(userControl);
+                    saveSettingButton.Enabled = true;
+                    filterSetting = userControl as FilterSetting;
+                }
             }
             catch (Exception ex)
             {
                 outputPictureBox.Image = null;
                 statusLabel.Text = ex.Message;
             }
+        }
+
+        private void ApplyFilter(IFilter filter)
+        {
+            var inputImage = (Bitmap)inputPictureBox.Image;
+            var outputImage = filter.Apply(inputImage);
+            outputPictureBox.Image = outputImage;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -228,6 +251,15 @@ namespace ImageEffect
                 outputImage.Save(saveFileDialog.FileName);
                 statusLabel.Text = "Save done";
             }
+        }
+
+        private void saveSettingButton_Click(object sender, EventArgs e)
+        {
+            var newItem = filterSetting.Save();
+            var filter = (IFilter)newItem.Value;
+            var selectedItem = filterListBox.SelectedItem as ListBoxItem;
+            selectedItem.Value = filter;
+            ApplyFilter(filter);
         }
     }
 }

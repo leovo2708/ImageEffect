@@ -11,16 +11,16 @@ using System.Windows.Forms;
 
 namespace ImageEffect.Filters
 {
-    public partial class ColorFilteringForm : Form, FilterParam
+    public partial class ColorFilteringUserControl : UserControl, FilterSetting
     {
         public ListBoxItem Item { get; private set; }
 
-        protected ColorFilteringForm()
+        protected ColorFilteringUserControl()
         {
             InitializeComponent();
         }
 
-        public ColorFilteringForm(ColorFiltering filter)
+        public ColorFilteringUserControl(ColorFiltering filter)
             : this()
         {
             var redRange = filter.Red;
@@ -34,16 +34,14 @@ namespace ImageEffect.Filters
             blueNumericUpDown2.Value = blueRange.Max;
         }
 
-        private void okButton_Click(object sender, EventArgs e)
+        public ListBoxItem Save()
         {
             var redRange = new AForge.IntRange((int)redNumericUpDown1.Value, (int)redNumericUpDown2.Value);
             var greenRange = new AForge.IntRange((int)greenNumericUpDown1.Value, (int)greenNumericUpDown2.Value);
             var blueRange = new AForge.IntRange((int)blueNumericUpDown1.Value, (int)blueNumericUpDown2.Value);
             var filter = new ColorFiltering(redRange, greenRange, blueRange);
             var text = $"ColorFiltering ({redRange} - {greenRange} - {blueRange})";
-            Item = new ListBoxItem(text, filter);
-            DialogResult = DialogResult.OK;
-            Close();
+            return new ListBoxItem(text, filter);
         }
     }
 }

@@ -43,6 +43,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
+            this.settingGroupBox = new System.Windows.Forms.GroupBox();
+            this.saveSettingButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.inputPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputPictureBox)).BeginInit();
             this.statusStrip.SuspendLayout();
@@ -82,7 +84,7 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 446);
+            this.statusStrip.Location = new System.Drawing.Point(0, 581);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(801, 22);
             this.statusStrip.TabIndex = 3;
@@ -179,11 +181,32 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
+            // settingGroupBox
+            // 
+            this.settingGroupBox.Location = new System.Drawing.Point(3, 448);
+            this.settingGroupBox.Name = "settingGroupBox";
+            this.settingGroupBox.Size = new System.Drawing.Size(328, 101);
+            this.settingGroupBox.TabIndex = 15;
+            this.settingGroupBox.TabStop = false;
+            this.settingGroupBox.Text = "Filter Setting";
+            // 
+            // saveSettingButton
+            // 
+            this.saveSettingButton.Location = new System.Drawing.Point(3, 553);
+            this.saveSettingButton.Name = "saveSettingButton";
+            this.saveSettingButton.Size = new System.Drawing.Size(139, 23);
+            this.saveSettingButton.TabIndex = 16;
+            this.saveSettingButton.Text = "Save and apply setting";
+            this.saveSettingButton.UseVisualStyleBackColor = true;
+            this.saveSettingButton.Click += new System.EventHandler(this.saveSettingButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(801, 468);
+            this.ClientSize = new System.Drawing.Size(801, 603);
+            this.Controls.Add(this.saveSettingButton);
+            this.Controls.Add(this.settingGroupBox);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -225,6 +248,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.GroupBox settingGroupBox;
+        private System.Windows.Forms.Button saveSettingButton;
     }
 }
 

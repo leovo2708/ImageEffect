@@ -59,21 +59,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Filters\ColorFilteringForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Filters\ColorFilteringUserControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Filters\ColorFilteringForm.Designer.cs">
-      <DependentUpon>ColorFilteringForm.cs</DependentUpon>
+    <Compile Include="Filters\ColorFilteringUserControl.Designer.cs">
+      <DependentUpon>ColorFilteringUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Filters\BlobsFilteringForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Filters\BlobsFilteringUserControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Filters\BlobsFilteringForm.Designer.cs">
-      <DependentUpon>BlobsFilteringForm.cs</DependentUpon>
+    <Compile Include="Filters\BlobsFilteringUserControl.Designer.cs">
+      <DependentUpon>BlobsFilteringUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Filters\Filter1.cs" />
     <Compile Include="Filters\Filter2.cs" />
-    <Compile Include="Filters\FilterParam.cs" />
+    <Compile Include="Filters\FilterSetting.cs" />
     <Compile Include="ListBoxItem.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -83,11 +83,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Filters\ColorFilteringForm.resx">
-      <DependentUpon>ColorFilteringForm.cs</DependentUpon>
+    <EmbeddedResource Include="Filters\ColorFilteringUserControl.resx">
+      <DependentUpon>ColorFilteringUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Filters\BlobsFilteringForm.resx">
-      <DependentUpon>BlobsFilteringForm.cs</DependentUpon>
+    <EmbeddedResource Include="Filters\BlobsFilteringUserControl.resx">
+      <DependentUpon>BlobsFilteringUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
