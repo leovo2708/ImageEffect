@@ -45,9 +45,12 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.settingGroupBox = new System.Windows.Forms.GroupBox();
             this.saveSettingButton = new System.Windows.Forms.Button();
+            this.outputContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.inputPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputPictureBox)).BeginInit();
             this.statusStrip.SuspendLayout();
+            this.outputContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // loadButton
@@ -79,6 +82,7 @@
             this.outputPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.outputPictureBox.TabIndex = 1;
             this.outputPictureBox.TabStop = false;
+            this.outputPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.outputPictureBox_MouseDown);
             // 
             // statusStrip
             // 
@@ -200,6 +204,20 @@
             this.saveSettingButton.UseVisualStyleBackColor = true;
             this.saveSettingButton.Click += new System.EventHandler(this.saveSettingButton_Click);
             // 
+            // outputContextMenuStrip
+            // 
+            this.outputContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem});
+            this.outputContextMenuStrip.Name = "outputContextMenuStrip";
+            this.outputContextMenuStrip.Size = new System.Drawing.Size(153, 48);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,6 +245,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.outputPictureBox)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.outputContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,6 +269,8 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.GroupBox settingGroupBox;
         private System.Windows.Forms.Button saveSettingButton;
+        private System.Windows.Forms.ContextMenuStrip outputContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
     }
 }
 

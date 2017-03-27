@@ -183,6 +183,7 @@ namespace ImageEffect
                 var inputImage = (Bitmap)Bitmap.FromFile(filePath);
                 inputPictureBox.Image = inputImage;
                 filterListBox.Enabled = true;
+                TryToApplySelectedFilter();
             }
             else
             {
@@ -260,6 +261,41 @@ namespace ImageEffect
             var selectedItem = filterListBox.SelectedItem as ListBoxItem;
             selectedItem.Value = filter;
             ApplyFilter(filter);
+        }
+
+        private void TryToApplySelectedFilter()
+        {
+            var selectedItem = filterListBox.SelectedItem as ListBoxItem;
+            if (selectedItem != null)
+            {
+                var filter = (IFilter)selectedItem.Value;
+                ApplyFilter(filter);
+            }
+        }
+
+        private void outputPictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && outputPictureBox.Image !=null)
+            {
+                outputContextMenuStrip.Show(outputPictureBox, new Point(e.X, e.Y));
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var outputImage = outputPictureBox.Image;
+            var saveFileDialog = new SaveFileDialog
+            {
+                Title = "Save output image",
+                Filter = "PNG File|*.png",
+                FilterIndex = 2,
+                RestoreDirectory = true
+            };
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                outputImage.Save(saveFileDialog.FileName);
+                statusLabel.Text = "Save done";
+            }
         }
     }
 }
