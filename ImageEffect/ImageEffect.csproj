@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="Filters\Filter1.cs" />
     <Compile Include="Filters\Filter2.cs" />
+    <Compile Include="Filters\Filter3.cs" />
     <Compile Include="Filters\FilterSetting.cs" />
     <Compile Include="ListBoxItem.cs" />
     <Compile Include="MainForm.cs">

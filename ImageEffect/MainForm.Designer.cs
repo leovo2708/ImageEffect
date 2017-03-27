@@ -125,7 +125,6 @@
             this.filterListBox.FormattingEnabled = true;
             this.filterListBox.Location = new System.Drawing.Point(3, 152);
             this.filterListBox.Name = "filterListBox";
-            this.filterListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.filterListBox.Size = new System.Drawing.Size(328, 290);
             this.filterListBox.TabIndex = 8;
             this.filterListBox.SelectedIndexChanged += new System.EventHandler(this.filterListBox_SelectedIndexChanged);
@@ -209,12 +208,12 @@
             this.outputContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem});
             this.outputContextMenuStrip.Name = "outputContextMenuStrip";
-            this.outputContextMenuStrip.Size = new System.Drawing.Size(153, 48);
+            this.outputContextMenuStrip.Size = new System.Drawing.Size(99, 26);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
