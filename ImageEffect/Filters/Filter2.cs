@@ -22,7 +22,29 @@ namespace ImageEffect.Filters
 
         public Bitmap Apply(Bitmap image)
         {
-            return MyEffect(image, 1, 8);
+            var redRange = new AForge.IntRange(128, 255);
+            var greenRange = new AForge.IntRange(0, 70);
+            var blueRange = new AForge.IntRange(0, 70);
+            var newImage = new Bitmap(image);
+            for (var x = 0; x < image.Width; x++)
+            {
+                for (var y = 0; y < image.Height; y++)
+                {
+                    var color = image.GetPixel(x, y);
+                    if (color.R >= redRange.Min && color.R <= redRange.Max
+                        && color.G >= greenRange.Min && color.G <= greenRange.Max
+                        && color.B >= blueRange.Min && color.B <= blueRange.Max)
+                    {
+                        newImage.SetPixel(x, y, Color.White);
+                    }
+                    else
+                    {
+                        newImage.SetPixel(x, y, Color.Black);
+                    }
+                }
+            }
+
+            return newImage;
         }
 
         public void Apply(UnmanagedImage sourceImage, UnmanagedImage destinationImage)
