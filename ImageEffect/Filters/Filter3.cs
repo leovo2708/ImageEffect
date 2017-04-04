@@ -15,6 +15,28 @@ namespace ImageEffect.Filters
     {
         public Bitmap Apply(Bitmap image)
         {
+            return Effect2(image);
+        }
+
+        public Bitmap Apply(BitmapData imageData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UnmanagedImage Apply(UnmanagedImage image)
+        {
+            var bitmap = image.ToManagedImage();
+            var outputBitmap = Apply(bitmap);
+            return UnmanagedImage.FromManagedImage(outputBitmap);
+        }
+
+        public void Apply(UnmanagedImage sourceImage, UnmanagedImage destinationImage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Bitmap Effect1(Bitmap image)
+        {
             byte minRed = 255;
             Point minRedPoint = new Point(0, 0);
             byte maxRed = 0;
@@ -92,21 +114,29 @@ namespace ImageEffect.Filters
             return image;
         }
 
-        public Bitmap Apply(BitmapData imageData)
+        public Bitmap Effect2(Bitmap image)
         {
-            throw new NotImplementedException();
-        }
+            var result = new Bitmap(image);
+            var length = 8;
+            var width = image.Width / length;
+            var height = 30;
+            using (var graphic = Graphics.FromImage(result))
+            {
+                var pen = new Pen(Color.Black);
+                for (var i = 0; i < length; i++)
+                {
+                    var x1 = i * width;
+                    var y1 = 0;
+                    if (i % 2 != 0)
+                    {
+                        y1 = 12;
+                    }
+                    var rectangle = new Rectangle(x1, y1, width-1, height);
+                    graphic.DrawRectangle(pen, rectangle);
+                }
+            }
 
-        public UnmanagedImage Apply(UnmanagedImage image)
-        {
-            var bitmap = image.ToManagedImage();
-            var outputBitmap = Apply(bitmap);
-            return UnmanagedImage.FromManagedImage(outputBitmap);
-        }
-
-        public void Apply(UnmanagedImage sourceImage, UnmanagedImage destinationImage)
-        {
-            throw new NotImplementedException();
+            return result;
         }
     }
 }
